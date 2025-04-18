@@ -39,10 +39,10 @@ def about():
     st.title("About Us")
     developers = [
         {"name": "Ayush Gupta","regno": "2023096", "role": "Team Leader and SVM and UI Designer", "bio": "Trained Model on Support Vector Classifier Algorithm and designed UI of the website using Streamlit."},
-        {"name": "Ayush Joshi", "regno": "2023096","role": "Dataset Explorer", "bio": "Explored various datasets and selected important features to be considered for estimation."},
-        {"name": "Ayush Pandey", "regno": "2023096","role": "Naive Bayes Expert", "bio": "Trained Model on Naive Bayes Algorithm"},
-        {"name": "Harsh Chaurasiya", "regno": "2023096","role": "Data Analyst", "bio": "Generated graphs and performed numerical data analysis for selected dataset and analysed various patterns among different features in the dataset."},
-        {"name": "Keshav", "regno": "2023096","role": "Algorithm Master", "bio": "Trained Model on Random Forest and XG Boost Algorithm and selected best out of all algorithms to make the model as accurate as possible."}
+        {"name": "Ayush Joshi", "regno": "2023097","role": "Dataset Explorer and Random Forest Expert", "bio": "Explored various datasets and selected important features to be considered for estimation."},
+        {"name": "Ayush Pandey", "regno": "20233331","role": "Naive Bayes Expert", "bio": "Trained Model on Naive Bayes Algorithm"},
+        {"name": "Harsh Chaurasiya", "regno": "20233136","role": "Data Analyst and SVM Expert", "bio": "Generated graphs and performed numerical data analysis for selected dataset and analysed various patterns among different features in the dataset."},
+        {"name": "Keshav Kumar", "regno": "20233339","role": "Algorithm Master", "bio": "Trained Model on Random Forest and XG Boost Algorithm and selected best out of all algorithms to make the model as accurate as possible."}
     ]
     
     for dev in developers:

@@ -5,17 +5,17 @@ import numpy as np
 import joblib
 import time  # For delay
 import streamlit.components.v1 as components  # For animation
-
+ 
 st.set_page_config(page_title="Cardio Estimator", page_icon="🫀")
-
+ 
 # Load Model and Scaler
 model = joblib.load("cvd_model.pkl")
 scaler = joblib.load("scaler.pkl")
-
+ 
 def add_bg_image(image_file):
     with open(image_file, "rb") as file:
         encoded_string = base64.b64encode(file.read()).decode()
-
+ 
     st.markdown(
         f"""
         <style>
@@ -28,38 +28,39 @@ def add_bg_image(image_file):
         """,
         unsafe_allow_html=True
     )
-
+ 
 def home():
     add_bg_image("2.jpg")
     st.title("Welcome to Cardiovascular Disease Estimator")
-    st.write("An AI-based tool to estimate the risk  cardiovascular diseases based on input parameters.")
-
+    st.write("Welcome to the Cardiovascular Disease Risk Estimator, a powerful AI-driven tool designed to assess your risk of developing heart-related conditions. By analyzing key health indicators such as age, blood pressure, cholesterol levels, and lifestyle factors, our model provides a personalized risk prediction within seconds.\n\nThis tool aims to support early detection and encourage timely medical consultation. Whether you're taking proactive steps towards a healthier life or just curious about your heart health, this estimator offers valuable insights in an easy-to-understand format.\n\nNote: This tool is for informational purposes only and is not a substitute for professional medical advice.")
+ 
 def about():
     add_bg_image("2.jpg")
     st.title("About Us")
     developers = [
-        {"name": "Ayush Gupta", "role": "Team Leader and SVM and UI Designer", "bio": "Trained Model on Support Vector Classifier Algorithm and designed UI of the website using Streamlit."},
-        {"name": "Ayush Joshi", "role": "Dataset Explorer", "bio": "Explored various datasets and selected important features to be considered for estimation."},
-        {"name": "Ayush Pandey", "role": "Naive Bayes Expert", "bio": "Trained Model on Naive Bayes Algorithm"},
-        {"name": "Harsh Chaurasiya", "role": "Data Analyst", "bio": "Generated graphs and performed numerical data analysis for selected dataset and analysed various patterns among different features in the dataset."},
-        {"name": "Keshav", "role": "Algorithm Master", "bio": "Trained Model on Random Forest and XG Boost Algorithm and selected best out of all algorithms to make the model as accurate as possible."}
+        {"name": "Ayush Gupta","regno": "2023096", "role": "Team Leader and SVM and UI Designer", "bio": "Trained Model on Support Vector Classifier Algorithm and designed UI of the website using Streamlit."},
+        {"name": "Ayush Joshi", "regno": "2023096","role": "Dataset Explorer", "bio": "Explored various datasets and selected important features to be considered for estimation."},
+        {"name": "Ayush Pandey", "regno": "2023096","role": "Naive Bayes Expert", "bio": "Trained Model on Naive Bayes Algorithm"},
+        {"name": "Harsh Chaurasiya", "regno": "2023096","role": "Data Analyst", "bio": "Generated graphs and performed numerical data analysis for selected dataset and analysed various patterns among different features in the dataset."},
+        {"name": "Keshav", "regno": "2023096","role": "Algorithm Master", "bio": "Trained Model on Random Forest and XG Boost Algorithm and selected best out of all algorithms to make the model as accurate as possible."}
     ]
     
     for dev in developers:
         st.markdown(f"""
             <div style="text-align: center; padding: 10px;">
                 <h3>{dev['name']}</h3>
+                <p style="font-size:24px; font-weight:bold; color:#ddd;">Reg No.: {dev['regno']}</p>
                 <p style="font-size:24px; font-weight:bold; color:#ddd;">Role: {dev['role']}</p>
                 <p style="font-size:18px; color:#ddd;">{dev['bio']}</p>
                 <hr style="border: 1px solid #ddd;">
             </div>
         """, unsafe_allow_html=True)
-
+ 
 def predictor():
     add_bg_image("2.jpg")
     st.title("Cardiovascular Disease Estimator")
     st.write("Enter patient details to predict cardiovascular disease risk.")
-
+ 
     # Input fields for all model features
     age = st.number_input("Age", min_value=20, max_value=100, value=50)
     sex = st.selectbox("Gender", ["Male", "Female"])
@@ -94,7 +95,7 @@ def predictor():
         "Flat": 1,
         "Downsloping": 2
     }
-
+ 
     # Apply mappings
     sex = sex_map[sex]
     chestpain = chestpain_map[chestpain]
@@ -107,16 +108,16 @@ def predictor():
     input_data = np.array([[age, sex, chestpain, restingbp, serumcholestrol, fastingbloodsugar,
                             restingrelectro, maxheartrate, exerciseangia, oldpeak, slope,
                             noofmajorvessels]])
-
+ 
     # Apply standard scaler to numeric columns only
     input_data[:, [0, 3, 4, 7, 9]] = scaler.transform(input_data[:, [0, 3, 4, 7, 9]])
-
+ 
     if st.button("Estimate"):
         with st.spinner("🧠 AI is analyzing your data... Please wait..."):
-            time.sleep(2)
-
+            time.sleep(4)
+ 
         prediction = model.predict(input_data)[0]
-
+ 
         if prediction == 1:
             st.error("⚠️ High Risk: Cardiovascular Disease Detected!")
             components.html(
@@ -135,14 +136,17 @@ def predictor():
                 </div>""",
                 height=220
             )
-
-st.sidebar.title("Menu")
-page = st.sidebar.radio("", ["Home", "About", "Estimator"])
-
-if page == "Home":
+ 
+# ---------------------
+# Tabbed Navigation on Top
+# ---------------------
+tabs = st.tabs(["🏠 Home", "📜 About", "🧮 Estimator"])
+ 
+with tabs[0]:
     home()
-elif page == "About":
+ 
+with tabs[1]:
     about()
-elif page == "Estimator":
+ 
+with tabs[2]:
     predictor()
-
